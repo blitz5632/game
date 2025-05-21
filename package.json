@@ -1,0 +1,11 @@
+{
+  "name": "life-simulator",
+  "version": "1.0.0",
+  "description": "A text-based life simulation game similar to BitLife",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

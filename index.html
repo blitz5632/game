@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sync Life</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Add this in the head section of your HTML -->
+    <audio id="click-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-simple-click-tone-1112.mp3" preload="auto"></audio>
+    <audio id="age-up-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3" preload="auto"></audio>
+    <audio id="game-over-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-over-trombone-1940.mp3" preload="auto"></audio>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="menu-icon"><i class="fas fa-bars"></i></div>
+            <h1>Sync Life</h1>
+            <div class="citizen-badge">CITIZEN</div>
+        </div>
+        
+        <!-- Character Creation Screen -->
+        <div id="character-creation" class="game-screen">
+            <h2>Create Your Character</h2>
+            <div class="input-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="input-group">
+                <label>Gender:</label>
+                <div class="button-group">
+                    <button id="male-btn" class="gender-btn">Male</button>
+                    <button id="female-btn" class="gender-btn">Female</button>
+                </div>
+            </div>
+            <div class="birth-btn" id="start-life-btn">
+                BIRTH!
+            </div>
+        </div>
+        
+        <!-- Main Game Screen -->
+        <div id="main-game" class="screen">
+            <!-- Tab Content Sections -->
+            <div id="infant-content" class="tab-content active-tab">
+                <div class="character-info">
+                    <div class="character-name">
+                        <img id="baby-icon" src="https://cdn-icons-png.flaticon.com/512/2948/2948035.png" width="30" height="30">
+                        <h2 id="player-name">Name</h2>
+                        <span id="info-icon">ⓘ</span>
+                    </div>
+                    <div class="character-status" id="player-status">Infant</div>
+                    <div class="bank-balance">$<span id="bank-balance">0</span></div>
+                </div>
+                
+                <div class="bio-container">
+                    <div id="age-display">Age: <span id="age-value">0</span> years</div>
+                    <div id="bio-text" class="bio-text">
+                        I was born a <span id="gender-text">female</span> in <span id="birthplace">Portland, United States</span>. <span id="birth-circumstance">I was an accidental pregnancy.</span>
+                        <br><br>
+                        My birthday is <span id="birthday">January 27</span>. I am a <span id="zodiac">Aquarius</span>.
+                        <br><br>
+                        My name is <span id="bio-name">Name</span>.
+                        <br>
+                        My father is <span id="father-name">Jacob Black</span>, a <span id="father-occupation">photographer</span> (age <span id="father-age">51</span>).
+                        <br>
+                        My mother is <span id="mother-name">Susan Black</span>, a <span id="mother-occupation">exotic dancer</span> (age <span id="mother-age">32</span>).
+                        <br>
+                        <span id="pet-info">We have a family dog named Jack.</span>
+                    </div>
+                    
+                    <div class="age-history">
+                        <div class="age-entry">Age: 1 year</div>
+                        <div class="age-entry">Age: 2 years</div>
+                    </div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-bars">
+                        <div class="stat-bar">
+                            <label>Happiness</label>
+                            <div class="stat-emoji">😊</div>
+                            <div class="bar-container">
+                                <div id="happiness-bar" class="bar"></div>
+                            </div>
+                            <span id="happiness-value">100</span>%
+                        </div>
+                        <div class="stat-bar">
+                            <label>Health</label>
+                            <div class="stat-emoji">❤️</div>
+                            <div class="bar-container">
+                                <div id="health-bar" class="bar"></div>
+                            </div>
+                            <span id="health-value">100</span>%
+                        </div>
+                        <div class="stat-bar">
+                            <label>Smarts</label>
+                            <div class="stat-emoji">🧠</div>
+                            <div class="bar-container">
+                                <div id="intelligence-bar" class="bar"></div>
+                            </div>
+                            <span id="intelligence-value">0</span>%
+                        </div>
+                        <div class="stat-bar">
+                            <label>Looks</label>
+                            <div class="stat-emoji">😍</div>
+                            <div class="bar-container">
+                                <div id="looks-bar" class="bar"></div>
+                            </div>
+                            <span id="looks-value">0</span>%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="event-container">
+                    <div id="event-text" class="event-text"></div>
+                </div>
+                
+                <div class="actions-container">
+                    <h3>Actions</h3>
+                    <div id="action-buttons" class="action-buttons">
+                        <!-- Action buttons will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="assets-content" class="tab-content">
+                <!-- Assets content will be populated by JavaScript -->
+            </div>
+
+            <div id="relationships-content" class="tab-content">
+                <h3>Relationships</h3>
+                <div class="relationships-list">
+                    <!-- Relationships will be added dynamically -->
+                </div>
+            </div>
+
+            <div id="activities-content" class="tab-content">
+                <h3>Activities</h3>
+                <div class="activities-list">
+                    <!-- Activity buttons will be added here -->
+                    <button class="activity-btn" onclick="handleActivity('adoption')">
+                        <i class="fas fa-baby"></i> Adoption
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('casino')">
+                        <i class="fas fa-dice"></i> Casino
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('crime')">
+                        <i class="fas fa-mask"></i> Crime
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('doctor')">
+                        <i class="fas fa-user-md"></i> Doctor
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('horse-races')">
+                        <i class="fas fa-horse"></i> Horse Races
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('lawsuit')">
+                        <i class="fas fa-gavel"></i> Lawsuit
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('license')">
+                        <i class="fas fa-id-card"></i> License
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('emigrate')">
+                        <i class="fas fa-globe"></i> Emigrate
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('fertility')">
+                        <i class="fas fa-dna"></i> Fertility
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('lottery')">
+                        <i class="fas fa-ticket-alt"></i> Lottery
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('love')">
+                        <i class="fas fa-heart"></i> Love
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('mind-body')">
+                        <i class="fas fa-spa"></i> Mind & Body
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('movie')">
+                        <i class="fas fa-film"></i> Movie Theater
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('nightlife')">
+                        <i class="fas fa-cocktail"></i> Nightlife
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('pets')">
+                        <i class="fas fa-paw"></i> Pets
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('plastic-surgery')">
+                        <i class="fas fa-cut"></i> Plastic Surgery
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('rehab')">
+                        <i class="fas fa-medkit"></i> Rehab
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('salon')">
+                        <i class="fas fa-cut"></i> Salon & Spa
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('sexuality')">
+                        <i class="fas fa-venus-mars"></i> Sexuality
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('social-media')">
+                        <i class="fas fa-hashtag"></i> Social Media
+                    </button>
+                    <button class="activity-btn" onclick="handleActivity('vacation')">
+                        <i class="fas fa-plane"></i> Vacation
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Over Screen -->
+        <div id="game-over" class="game-screen hidden">
+            <h2>Game Over</h2>
+            <div id="life-summary" class="life-summary"></div>
+            <div id="life-score" class="life-score"></div>
+            <button id="play-again-btn" class="main-btn">Play Again</button>
+        </div>
+        
+        <!-- Bottom Navigation Bar -->
+        <div class="bottom-nav">
+            <div class="nav-item" id="infant-tab">
+                <i class="fas fa-baby"></i>
+                <span>Infant</span>
+            </div>
+            <div class="nav-item" id="assets-tab">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Assets</span>
+            </div>
+            <div class="nav-item age-button" id="age-up-btn">
+                <div class="age-btn-circle">
+                    <i class="fas fa-plus"></i>
+                    <span>Age</span>
+                </div>
+            </div>
+            <div class="nav-item" id="relationships-tab">
+                <i class="fas fa-users"></i>
+                <span>Relationships</span>
+            </div>
+            <div class="nav-item" id="activities-tab">
+                <i class="fas fa-running"></i>
+                <span>Activities</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
